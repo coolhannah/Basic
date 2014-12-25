@@ -9,34 +9,67 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    let cowboySprite = SKSpriteNode(imageNamed: "cowboy")
+    let bkgdSprite = SKSpriteNode(imageNamed: "background")
+    let bkgdSprite2 = SKSpriteNode(imageNamed: "background")
+    
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
-        self.addChild(myLabel)
+        //generate background moving
+        generateBkgd(view)
+        
+        //display cowboy
+        cowboySprite.position = CGPoint(x: view.bounds.width/8, y: view.bounds.height/4)
+        cowboySprite.xScale = 1/6
+        cowboySprite.yScale = 1/6
+        self.addChild(cowboySprite)
+        runForever()
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        /* Called when a touch begins */
+    
+    func generateBkgd(view: SKView) {
+        //note: CGPoint is based on center point
         
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+        //first sprite (on screen)
+        bkgdSprite.position = CGPointMake(view.bounds.width/2, view.bounds.height/2)
+        bkgdSprite.size = view.bounds.size
+        //second sprite (off screen)
+        bkgdSprite2.position = CGPointMake(view.bounds.width * 1.5, view.bounds.height/2)
+        bkgdSprite2.size = view.bounds.size
+        
+        //animates sprite backward by a length of screen size. Scales well because time is based on screen size.
+        let moveGroundSprite = SKAction.moveByX(-view.bounds.width, y: 0, duration: NSTimeInterval(view.bounds.width/100))
+        //moves the sprite back to original position
+        let resetGroundSprite = SKAction.moveByX(view.bounds.width, y: 0, duration: 0.0)
+        
+        //animate
+        bkgdSprite.runAction(SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite, resetGroundSprite])))
+        bkgdSprite2.runAction(SKAction.repeatActionForever(SKAction.sequence([moveGroundSprite, resetGroundSprite])))
+        self.addChild(bkgdSprite)
+        self.addChild(bkgdSprite2)
+        
+    }
+    
+    func runForever()
+    {
+        var arr: [SKTexture] = Array<SKTexture>()
+        for var i: Int = 1; i <= 4; ++i {
+            arr.append(SKTexture(imageNamed: "sprite_\(i)"))
+            arr[i-1].filteringMode = .Nearest
         }
+        let heroAnim = SKAction.animateWithTextures([
+            arr[0], arr[1], arr[2], arr[3]
+            ], timePerFrame: 0.01)
+        
+        let run = SKAction.repeatActionForever(heroAnim)
+        cowboySprite.runAction(run)
+    }
+    
+    
+    //touch the screen
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+
     }
    
     override func update(currentTime: CFTimeInterval) {

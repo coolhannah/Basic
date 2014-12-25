@@ -8,13 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B1C241E41A4B4E8100D1F670 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C241E31A4B4E8100D1F670 /* AppDelegate.swift */; };
-		B1C241E61A4B4E8100D1F670 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1C241E51A4B4E8100D1F670 /* GameScene.sks */; };
 		B1C241E81A4B4E8100D1F670 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C241E71A4B4E8100D1F670 /* GameScene.swift */; };
-		B1C241EA1A4B4E8100D1F670 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C241E91A4B4E8100D1F670 /* GameViewController.swift */; };
 		B1C241ED1A4B4E8100D1F670 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C241EB1A4B4E8100D1F670 /* Main.storyboard */; };
-		B1C241EF1A4B4E8100D1F670 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1C241EE1A4B4E8100D1F670 /* Images.xcassets */; };
 		B1C241F21A4B4E8100D1F670 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C241F01A4B4E8100D1F670 /* LaunchScreen.xib */; };
 		B1C241FE1A4B4E8100D1F670 /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C241FD1A4B4E8100D1F670 /* BasicTests.swift */; };
+		B1C242081A4B52B600D1F670 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C242071A4B52B600D1F670 /* GameViewController.swift */; };
+		B1C8D85E1A4BF2B7004F53EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1C8D85D1A4BF2B7004F53EA /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,15 +30,14 @@
 		B1C241DE1A4B4E8100D1F670 /* Basic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Basic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1C241E21A4B4E8100D1F670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1C241E31A4B4E8100D1F670 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B1C241E51A4B4E8100D1F670 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B1C241E71A4B4E8100D1F670 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		B1C241E91A4B4E8100D1F670 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B1C241EC1A4B4E8100D1F670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B1C241EE1A4B4E8100D1F670 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B1C241F11A4B4E8100D1F670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B1C241F71A4B4E8100D1F670 /* BasicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1C241FC1A4B4E8100D1F670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1C241FD1A4B4E8100D1F670 /* BasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTests.swift; sourceTree = "<group>"; };
+		B1C242071A4B52B600D1F670 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = ../../GameViewController.swift; sourceTree = "<group>"; };
+		B1C8D85D1A4BF2B7004F53EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,11 +80,10 @@
 			isa = PBXGroup;
 			children = (
 				B1C241E31A4B4E8100D1F670 /* AppDelegate.swift */,
-				B1C241E51A4B4E8100D1F670 /* GameScene.sks */,
 				B1C241E71A4B4E8100D1F670 /* GameScene.swift */,
-				B1C241E91A4B4E8100D1F670 /* GameViewController.swift */,
+				B1C242071A4B52B600D1F670 /* GameViewController.swift */,
 				B1C241EB1A4B4E8100D1F670 /* Main.storyboard */,
-				B1C241EE1A4B4E8100D1F670 /* Images.xcassets */,
+				B1C8D85D1A4BF2B7004F53EA /* Images.xcassets */,
 				B1C241F01A4B4E8100D1F670 /* LaunchScreen.xib */,
 				B1C241E11A4B4E8100D1F670 /* Supporting Files */,
 			);
@@ -199,8 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1C241F21A4B4E8100D1F670 /* LaunchScreen.xib in Resources */,
-				B1C241EF1A4B4E8100D1F670 /* Images.xcassets in Resources */,
-				B1C241E61A4B4E8100D1F670 /* GameScene.sks in Resources */,
+				B1C8D85E1A4BF2B7004F53EA /* Images.xcassets in Resources */,
 				B1C241ED1A4B4E8100D1F670 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,7 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1C241E81A4B4E8100D1F670 /* GameScene.swift in Sources */,
-				B1C241EA1A4B4E8100D1F670 /* GameViewController.swift in Sources */,
+				B1C242081A4B52B600D1F670 /* GameViewController.swift in Sources */,
 				B1C241E41A4B4E8100D1F670 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +409,7 @@
 				B1C242031A4B4E8100D1F670 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B1C242041A4B4E8100D1F670 /* Build configuration list for PBXNativeTarget "BasicTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +418,7 @@
 				B1C242061A4B4E8100D1F670 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
