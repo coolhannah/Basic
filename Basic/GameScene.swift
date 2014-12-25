@@ -11,10 +11,13 @@ import SpriteKit
 class GameScene: SKScene {
     
     let cowboySprite = SKSpriteNode(imageNamed: "cowboy")
+    let cowboyNode = SKNode()
+    
     let bkgdSprite = SKSpriteNode(imageNamed: "background")
     let bkgdSprite2 = SKSpriteNode(imageNamed: "background")
     
     override func didMoveToView(view: SKView) {
+        self.addChild(cowboyNode)
         
         //generate background moving
         generateBkgd(view)
@@ -23,7 +26,7 @@ class GameScene: SKScene {
         cowboySprite.position = CGPoint(x: view.bounds.width/8, y: view.bounds.height/4)
         cowboySprite.xScale = 1/6
         cowboySprite.yScale = 1/6
-        self.addChild(cowboySprite)
+        cowboyNode.addChild(cowboySprite)
         runForever()
     }
     
@@ -67,7 +70,7 @@ class GameScene: SKScene {
     
     //touch the screen
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-
+        
     }
    
     override func update(currentTime: CFTimeInterval) {
