@@ -54,13 +54,11 @@ class GameScene: SKScene {
     func runForever()
     {
         var arr: [SKTexture] = Array<SKTexture>()
-        for var i: Int = 1; i <= 4; ++i {
+        for var i: Int = 1; i <= 8; ++i {
             arr.append(SKTexture(imageNamed: "sprite_\(i)"))
             arr[i-1].filteringMode = .Nearest
         }
-        let heroAnim = SKAction.animateWithTextures([
-            arr[0], arr[1], arr[2], arr[3]
-            ], timePerFrame: 0.01)
+        let heroAnim = SKAction.animateWithTextures(arr, timePerFrame: 0.06)
         
         let run = SKAction.repeatActionForever(heroAnim)
         cowboySprite.runAction(run)
