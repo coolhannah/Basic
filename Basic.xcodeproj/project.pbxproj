@@ -79,10 +79,10 @@
 		B1C241E01A4B4E8100D1F670 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
-				B16AF7EF1A4D097C000F6B6A /* Images.xcassets */,
-				B16AF7ED1A4D0973000F6B6A /* GameViewController.swift */,
 				B1C241E31A4B4E8100D1F670 /* AppDelegate.swift */,
+				B16AF7ED1A4D0973000F6B6A /* GameViewController.swift */,
 				B1C241E71A4B4E8100D1F670 /* GameScene.swift */,
+				B16AF7EF1A4D097C000F6B6A /* Images.xcassets */,
 				B1C241EB1A4B4E8100D1F670 /* Main.storyboard */,
 				B1C241F01A4B4E8100D1F670 /* LaunchScreen.xib */,
 				B1C241E11A4B4E8100D1F670 /* Supporting Files */,
