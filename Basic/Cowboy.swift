@@ -72,6 +72,11 @@ class Cowboy : SKSpriteNode {
     
         cowRun = SKAction.repeatActionForever(heroAnim)
     }
+    
+    func resetCowboy() {
+        self.position = cowPos
+        self.runAction(cowRun)
+    }
 
    
 

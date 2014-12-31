@@ -14,6 +14,9 @@ let groundTexture = SKTexture(imageNamed: "Ground")
 let ground1 = SKSpriteNode(texture: groundTexture)
 let ground2 = SKSpriteNode(texture: groundTexture)
 
+var moveground = SKAction()
+var resetground = SKAction()
+
 class Ground : SKNode {
     
     init(view: SKView) {
@@ -31,8 +34,8 @@ class Ground : SKNode {
         ground2.position = CGPoint(x: view.bounds.width * 1.5, y: view.bounds.height/2)
         ground2.size = view.bounds.size
         
-        let moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1))
-        let resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
+        moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1.5))
+        resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
         
         ground1.runAction(SKAction.repeatActionForever(SKAction.sequence([moveground, resetground])))
         ground2.runAction(SKAction.repeatActionForever(SKAction.sequence([moveground, resetground])))

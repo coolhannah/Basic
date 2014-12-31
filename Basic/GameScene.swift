@@ -15,51 +15,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Hero = 1
         case Enemy = 2
     }
-    
-    var cont : Bool = Bool()
+
+    var cont : Bool = false
+    var ready : Bool = false
+    var stop : Bool = false
+    var replay : Bool = false
+    var label = SKLabelNode()
     
     var cowboySprite = Cowboy()
-    var cactusSprite = Cactus()
     
     var sky = Sky()
     var ground = Ground()
     
-    let waitForSecond = SKAction.waitForDuration(NSTimeInterval(1.0))
+    let wait = SKAction.waitForDuration(NSTimeInterval(3.0))
     
     override func didMoveToView(view: SKView) {
         
         //physics of world
-        self.physicsWorld.gravity.dy = -4
+        self.physicsWorld.gravity.dy = CGFloat(-5)
         self.physicsWorld.contactDelegate  = self
         
         //generate background
         sky = Sky(view: view); self.addChild(sky)
         ground = Ground(view: view); self.addChild(ground)
         
-        //generate players
+        //generate player
         cowboySprite = Cowboy(view: view)
-        cactusSprite = Cactus(view: view)
-        
-        //add players to scene
         self.addChild(cowboySprite)
-        self.addChild(cactusSprite)
         
-        var label = SKLabelNode(text: "Ready?")
+        label = SKLabelNode(text: "Ready?")
         label.fontSize = CGFloat(64)
         label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
         self.addChild(label)
-        var sendCactus : SKAction = SKAction.runBlock({
-            label.removeFromParent()
-            self.cactusSprite.sendCactus()
-        })
-        cactusSprite.runAction(SKAction.sequence([ SKAction.waitForDuration(NSTimeInterval(5.0)) , sendCactus]))
-        
+
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
         
         if(contact.bodyA.categoryBitMask == 1 && contact.bodyB.categoryBitMask == 2)
         {
+            stop = true
             
             //let cowboySprite fly away
             cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
@@ -70,8 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sky.stop()
             ground.stop()
             
-            //kill cactus
-            cactusSprite.removeAllActions()
+            gameOver()
         }
         else
         {
@@ -83,18 +77,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //touched screen
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        if(cont) {
+        if(cont && ready && !stop) {
             cont = false;
-            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 60.0))
+            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 70.0))
+            label.removeFromParent()
+        }
+        if(!ready) {
+            label.text = "Go!"
+            ready = true
+        }
+        if(replay) {
+            if(label.parent != nil) {
+            label.removeFromParent()
+            }
+            stop = false
+            ready = false
+            cont = true
+            cowboySprite.resetCowboy()
+            ground = Ground(view: view!)
+            sky = Sky(view: view!)
         }
     }
     
+    var lastCactus : Double = 0.0
+    
+    
     override func update(currentTime: CFTimeInterval) {
-        if(cactusSprite.position.x < 0) {
-            var sendCactus : SKAction = SKAction.runBlock({
-                self.cactusSprite.sendCactus()
-            })
-            cactusSprite.runAction(SKAction.sequence([waitForSecond, sendCactus]))
+        if(currentTime * 100000000 % 2 == 0 && !stop && ready && currentTime - lastCactus > 1.0) {
+            var newCactus = Cactus(view: view!)
+            newCactus.sendCactus()
+            self.addChild(newCactus)
+            lastCactus = currentTime
         }
     }
+    
+    func gameOver() {
+        label.text = "Replay?"
+        if(label.parent == nil) {
+        self.addChild(label)
+        }
+        replay = true
+    }
+    
+    
+    
+    
+    
+    
+    
 }
