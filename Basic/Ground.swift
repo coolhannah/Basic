@@ -14,8 +14,9 @@ let groundTexture = SKTexture(imageNamed: "Ground")
 let ground1 = SKSpriteNode(texture: groundTexture)
 let ground2 = SKSpriteNode(texture: groundTexture)
 
-var moveground = SKAction()
-var resetground = SKAction()
+var moveIt = SKAction()
+
+var positions = CGPoint()
 
 class Ground : SKNode {
     
@@ -29,16 +30,19 @@ class Ground : SKNode {
         self.physicsBody?.dynamic = false
         
         //position based on center points
-        ground1.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
+        positions = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
+        
+        ground1.position = positions
         ground1.size = view.bounds.size
-        ground2.position = CGPoint(x: view.bounds.width * 1.5, y: view.bounds.height/2)
+        ground2.position = CGPoint(x: positions.x * 3, y: positions.y)
         ground2.size = view.bounds.size
         
-        moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1.5))
-        resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
+        let moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1.5))
+        let resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
+        moveIt = SKAction.repeatActionForever(SKAction.sequence([moveground, resetground]))
         
-        ground1.runAction(SKAction.repeatActionForever(SKAction.sequence([moveground, resetground])))
-        ground2.runAction(SKAction.repeatActionForever(SKAction.sequence([moveground, resetground])))
+        ground1.runAction(moveIt)
+        ground2.runAction(moveIt)
         
         self.addChild(ground1)
         self.addChild(ground2)
@@ -47,6 +51,18 @@ class Ground : SKNode {
     func stop() {
         ground1.removeAllActions()
         ground2.removeAllActions()
+    }
+    func start() {
+        ground1.position = positions
+        ground2.position = CGPoint(x: positions.x * 3, y: positions.y)
+        ground1.runAction(moveIt)
+        ground2.runAction(moveIt)
+    }
+    
+    func shake() {
+        let moveLeft = SKAction.moveByX(positions.x/12, y:0 , duration: NSTimeInterval(0.5))
+        let moveRight = SKAction.moveByX(-positions.x/12, y:0 , duration: NSTimeInterval(0.5))
+        let shakeAction = SKAction.repeatAction(SKAction.sequence([moveLeft, moveRight]), count: 20)
     }
     
     override init() {

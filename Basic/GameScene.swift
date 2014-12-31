@@ -64,7 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //reset bkgd
             sky.stop()
             ground.stop()
-            
             gameOver()
         }
         else
@@ -87,15 +86,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             ready = true
         }
         if(replay) {
-            if(label.parent != nil) {
-            label.removeFromParent()
-            }
             stop = false
-            ready = false
             cont = true
+            self.addChild(cowboySprite)
+            self.addChild(ground)
+            self.addChild(sky)
             cowboySprite.resetCowboy()
-            ground = Ground(view: view!)
-            sky = Sky(view: view!)
+            ground.start()
+            sky.start()
+            
+            replay = false
         }
     }
     
@@ -117,6 +117,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(label)
         }
         replay = true
+        self.removeAllChildren()
+        //go to game over scene
+        
     }
     
     
