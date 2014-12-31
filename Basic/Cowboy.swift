@@ -75,7 +75,6 @@ class Cowboy : SKSpriteNode {
     
     func resetCowboy() {
         self.position = cowPos
-        
         self.runAction(cowRun)
     }
 

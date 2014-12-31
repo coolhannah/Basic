@@ -44,7 +44,7 @@ class Cactus : SKSpriteNode {
     func sendCactus() {
         self.position = offscrnPt
         self.removeAllActions()
-        self.runAction(SKAction.moveByX(-viewWidth * 5/4, y: 0, duration: NSTimeInterval(2.5)))
+        self.runAction(SKAction.moveByX(-viewWidth * 5/4, y: 0, duration: NSTimeInterval(1.5)))
     }
     
 }

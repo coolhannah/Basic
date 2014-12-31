@@ -16,10 +16,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Enemy = 2
     }
 
-    var cont : Bool = false
-    var ready : Bool = false
-    var stop : Bool = false
-    var replay : Bool = false
+    var canJump : Bool = false //
+    var readyToBegin : Bool = false
+    var gameIsOver : Bool = false
+    var tappedReplay : Bool = false
+    
     var label = SKLabelNode()
     
     var cowboySprite = Cowboy()
@@ -51,15 +52,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        
-        if(contact.bodyA.categoryBitMask == 1 && contact.bodyB.categoryBitMask == 2)
+        //game over, you died!
+        if(contact.bodyA.categoryBitMask == 1 || contact.bodyA.categoryBitMask == 2)
         {
-            stop = true
+            gameIsOver = true
             
             //let cowboySprite fly away
-            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
+            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 20.0, dy: 200.0))
             cowboySprite.removeAllActions()
-            cont = false
+            canJump = false
             
             //reset bkgd
             sky.stop()
@@ -69,33 +70,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else
         {
             //ground contact
-            cont = true
+            canJump = true
         }
         
     }
     
     //touched screen
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        if(cont && ready && !stop) {
-            cont = false;
+        //reading in a jump
+        if(canJump && readyToBegin && !gameIsOver) {
+            canJump = false;
             cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 70.0))
             label.removeFromParent()
         }
-        if(!ready) {
+        
+        //reading in a response to begin game
+        if(!readyToBegin) {
             label.text = "Go!"
-            ready = true
+            readyToBegin = true
         }
-        if(replay) {
-            stop = false
-            cont = true
-            self.addChild(cowboySprite)
-            self.addChild(ground)
-            self.addChild(sky)
+        
+        //user wants to replay
+        if(tappedReplay) {
+            gameIsOver = false
+            canJump = true
+
             cowboySprite.resetCowboy()
             ground.start()
             sky.start()
             
-            replay = false
+            self.addChild(cowboySprite)
+            self.addChild(ground)
+            self.addChild(sky)
+            
+            tappedReplay = false
         }
     }
     
@@ -103,7 +111,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(currentTime: CFTimeInterval) {
-        if(currentTime * 100000000 % 2 == 0 && !stop && ready && currentTime - lastCactus > 1.0) {
+        //spawning a new cactus
+        if(currentTime * 100000000 % 2 == 0 && !gameIsOver && readyToBegin && currentTime - lastCactus > 1.0) {
             var newCactus = Cactus(view: view!)
             newCactus.sendCactus()
             self.addChild(newCactus)
@@ -111,12 +120,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    //destroy scene
     func gameOver() {
-        label.text = "Replay?"
-        if(label.parent == nil) {
-        self.addChild(label)
-        }
-        replay = true
+        tappedReplay = true
         self.removeAllChildren()
         //go to game over scene
         
