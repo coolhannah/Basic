@@ -34,7 +34,7 @@ class GameOverScene : SKScene {
         let highScore = userDefaults.integerForKey("user")
         
         if(jump.jumps == 1) {
-            label.text = "1 jump! Play Again?"
+            label.text = "\(jump.jumps) jump! High Score: \(highScore) "
         }
         else {
         label.text = "\(jump.jumps) jumps! High Score: \(highScore) "
@@ -58,7 +58,6 @@ class GameOverScene : SKScene {
         
         //display the game scene through our main view
         skView.presentScene(gameScene, transition: trans)
-        
     }
     
     override func update(currentTime: NSTimeInterval) {

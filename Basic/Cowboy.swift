@@ -9,32 +9,19 @@
 import Foundation
 import SpriteKit
 
-
-//TODO MAIN TODO
-/*
-|√|    1) Make sure the cactus is not affected by physics- just let it do a runByX
-2) Reimplement everything into classes
-|√|    3) Figure out why the double jump is happening at all
-4) Randomize the speed and entrance of cactus
-5) replay screen
-*/
-
 class Cowboy : SKSpriteNode {
-    
-    //required
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     
     var cowPos = CGPoint()
     var groundY = CGFloat()
     var cowRun = SKAction()
+    let bulletNode = SKNode()
+    
     
     override init() {
         //do nothing
         super.init()
     }
+    
     override init(texture: SKTexture!, color: UIColor!, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
     }
@@ -46,6 +33,7 @@ class Cowboy : SKSpriteNode {
         cowPos = CGPoint(x: view.bounds.width/8, y: groundY * 5/4)
         let texture = SKTexture(imageNamed: "cowboy")
         
+        
         //superclass init
         super.init(texture: texture, color: nil, size: texture.size())
         
@@ -53,13 +41,37 @@ class Cowboy : SKSpriteNode {
         self.position = cowPos
         self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
         self.physicsBody?.mass = CGFloat(0.2)
+        
         self.physicsBody?.categoryBitMask = GameScene.types.Hero.rawValue
-        self.physicsBody?.contactTestBitMask = GameScene.types.Enemy.rawValue
-        self.physicsBody?.collisionBitMask = GameScene.types.Enemy.rawValue
+        self.physicsBody?.contactTestBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Ground.rawValue
+        self.physicsBody?.collisionBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Ground.rawValue
+        self.physicsBody?.restitution = 0.0
         self.physicsBody?.dynamic = true
         setUpRunningAnim()
         self.runAction(cowRun)
+        
+        //Add bulletNode
+        self.addChild(bulletNode)
+        
     }
+    
+    func shoot() {
+         //add these to current position to get gun location
+       // let gunY = 7/11 * self.size.height
+        //let gunX = 20/23 * self.size.width
+        let shootPoint = CGPoint(x: self.position.x/100, y: self.position.y/100)
+        let bullet = SKSpriteNode(imageNamed: "bullet")
+        bullet.size = CGSize(width: self.size.width, height: self.size.height)
+        bullet.position = shootPoint
+        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
+        bullet.physicsBody?.dynamic = false
+        bullet.physicsBody?.categoryBitMask = GameScene.types.Bullet.rawValue
+        bullet.physicsBody?.contactTestBitMask = 0
+        bullet.physicsBody?.collisionBitMask = 0
+        bullet.runAction(SKAction.moveByX(self.size.width*13, y: 0.0, duration: 1.0))
+        bulletNode.addChild(bullet)
+    }
+    
     
     func setUpRunningAnim()
     {
@@ -78,6 +90,10 @@ class Cowboy : SKSpriteNode {
         self.runAction(cowRun)
     }
 
+    //required
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
    
 
 }

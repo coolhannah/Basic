@@ -9,16 +9,16 @@
 import Foundation
 import SpriteKit
 
-let groundTexture = SKTexture(imageNamed: "Ground")
-
-let ground1 = SKSpriteNode(texture: groundTexture)
-let ground2 = SKSpriteNode(texture: groundTexture)
-
-var moveIt = SKAction()
-
-var positions = CGPoint()
-
 class Ground : SKNode {
+    
+    let groundTexture = SKTexture(imageNamed: "Ground")
+    
+    let ground1 = SKSpriteNode(texture: SKTexture(imageNamed: "Ground"))
+    let ground2 = SKSpriteNode(texture: SKTexture(imageNamed: "Ground"))
+    
+    var moveIt = SKAction()
+    
+    var positions = CGPoint()
     
     init(view: SKView) {
         super.init()
@@ -27,8 +27,9 @@ class Ground : SKNode {
         
         self.physicsBody =
             SKPhysicsBody(edgeFromPoint: CGPoint(x: -1000, y: groundY), toPoint: CGPoint(x:view.bounds.width * 3/2 , y: groundY))
-        self.physicsBody?.dynamic = false
-        
+        self.physicsBody?.categoryBitMask = GameScene.types.Ground.rawValue
+        self.physicsBody?.collisionBitMask = GameScene.types.Hero.rawValue
+        self.physicsBody?.contactTestBitMask = GameScene.types.Hero.rawValue
         //position based on center points
         positions = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
         
@@ -40,15 +41,16 @@ class Ground : SKNode {
         let moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1.5))
         let resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
         moveIt = SKAction.repeatActionForever(SKAction.sequence([moveground, resetground]))
-        
-        ground1.runAction(moveIt)
-        ground2.runAction(moveIt)
-        
+    
         ground1.removeFromParent()
         ground2.removeFromParent()
         
         self.addChild(ground1)
         self.addChild(ground2)
+        
+        ground1.runAction(moveIt)
+        ground2.runAction(moveIt)
+        
     }
     
     func stop() {

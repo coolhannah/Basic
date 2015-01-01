@@ -12,9 +12,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //collision enumeration
     enum types : UInt32 {
-        case None = 0
-        case Hero = 1
-        case Enemy = 2
+        case Ground = 1
+        case Hero = 2
+        case Enemy = 4
+        case Bullet = 8
     }
 
     //booleans that handle jump and game over
@@ -80,18 +81,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         
-        //game over, you died!
-        if(contact.bodyA.categoryBitMask == 1 || contact.bodyA.categoryBitMask == 2)
+        var categoryA = contact.bodyA.categoryBitMask
+        var categoryB = contact.bodyB.categoryBitMask
+        
+        println(categoryA.description + " " + categoryB.description)
+        
+        //collision with player and cactus
+        if((categoryA == 4 && categoryB == 2) || (categoryA == 2 && categoryB == 4))
         {
             gameIsOver = true
             canJump = false
             
             //let cowboySprite fly away
-            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: -5.0, dy: 150.0))
-            cowboySprite.physicsBody?.applyAngularImpulse(CGFloat(0.09))
             cowboySprite.removeAllActions()
-            
-            
+            cowboySprite.physicsBody?.dynamic = false
+            var popUp = SKAction.moveByX(0, y: self.size.height/4, duration: 0.5)
+            var falldown = SKAction.moveByX(0, y: -self.size.height, duration: 0.5)
+            cowboySprite.runAction(SKAction.sequence([popUp, falldown]))
             //reset bkgd
             sky.stop()
             ground.stop()
@@ -104,9 +110,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.runAction(SKAction.sequence([wait, block]))
             
         }
+        //collision with bullet
+        else if(categoryA == 8 || categoryB == 8) {
+            //do nothing
+        }
+        //collision with ground
         else
         {
-            //ground contact
             canJump = true
         }
         
@@ -115,12 +125,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //touched screen
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
+        var touchLocation = touches.anyObject()?.locationInView(self.view!)
+        
+        
         //reading in a jump
-        if(canJump && readyToBegin && !gameIsOver) {
+        if(canJump && readyToBegin && !gameIsOver && touchLocation?.x < self.view!.bounds.width/2) {
             cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 90.0))
             canJump = false;
             addJump = true
             jump.jumps++
+        }
+        if(!gameIsOver && readyToBegin && touchLocation?.x > self.view!.bounds.width/2) {
+            cowboySprite.shoot()
         }
         
         //ready to begin!
@@ -169,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //destroy scene
         self.removeAllChildren()
-        
+        jump.jumps = 0
         //go to game over scene
         let overScene = GameOverScene(size: view!.bounds.size)
         overScene.scaleMode = .AspectFill
