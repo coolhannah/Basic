@@ -47,6 +47,7 @@ class GameOverScene : SKScene {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        jump.jumps = 0
         let gameScene = GameScene(size: viewer.bounds.size)
         gameScene.scaleMode = .AspectFill
         

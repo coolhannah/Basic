@@ -16,6 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case Hero = 2
         case Enemy = 4
         case Bullet = 8
+        case Bird = 16
     }
 
     //booleans that handle jump and game over
@@ -30,7 +31,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //handle "players"
     var cowboySprite = Cowboy()
-    var enemyNode = SKNode()
+    let cactusNode = SKNode()
+    let birdNode = SKNode()
     
     //background
     var sky = Sky()
@@ -50,7 +52,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //physics of world
         self.physicsWorld.gravity.dy = CGFloat(-9.8)
         self.physicsWorld.contactDelegate  = self
-        
         //generate background
         sky = Sky(view: view);
         ground = Ground(view: view);
@@ -75,7 +76,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(ground)
         self.addChild(cowboySprite)
         self.addChild(label)
-        self.addChild(enemyNode)
+        self.addChild(cactusNode)
+        self.addChild(birdNode)
         
     }
     
@@ -86,8 +88,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         println(categoryA.description + " " + categoryB.description)
         
-        //collision with player and cactus
-        if((categoryA == 4 && categoryB == 2) || (categoryA == 2 && categoryB == 4))
+        //player death
+        if(categoryA == 2 && (categoryB == 16 || categoryB == 4))
         {
             gameIsOver = true
             canJump = false
@@ -111,11 +113,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         //collision with bullet
-        else if(categoryA == 8 || categoryB == 8) {
-            //do nothing
+        else if(categoryB == 8 && categoryA == 16) {
+            contact.bodyA.node?.removeFromParent()
         }
         //collision with ground
-        else
+        else if((categoryA == 1 && categoryB == 2) || (categoryB == 1 && categoryA == 2))
         {
             canJump = true
         }
@@ -130,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //reading in a jump
         if(canJump && readyToBegin && !gameIsOver && touchLocation?.x < self.view!.bounds.width/2) {
-            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 90.0))
+            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
             canJump = false;
             addJump = true
             jump.jumps++
@@ -139,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             cowboySprite.shoot()
         }
         
-        //ready to begin!
+        //ready to begin!   
         if(!readyToBegin) {
             label.removeFromParent()
             self.addChild(jumpCounter)
@@ -154,19 +156,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(currentTime: CFTimeInterval) {
         
-        var randomNum = Int(arc4random_uniform(6))
+        var randomNum = Int(arc4random_uniform(8))
         
         //spawning a new cactus
-        if(!gameIsOver && readyToBegin && currentTime - lastCactus > 0.65 && randomNum == 1) {
+        if(!gameIsOver && readyToBegin && currentTime - lastCactus > 0.65) {
+            if(randomNum == 1) {
             var newCactus = Cactus(view: view!)
             newCactus.sendCactus()
-            enemyNode.addChild(newCactus)
+            cactusNode.addChild(newCactus)
             lastCactus = currentTime
+            }
+            if(randomNum == 2) {
+            let newBird = Bird(view: view!)
+            newBird.sendBird()
+            cactusNode.addChild(newBird)
+            }
         }
         
         //stop cacti if game is over
         if(gameIsOver) {
-            var cacti = enemyNode.children
+            var cacti = cactusNode.children
             for anyCactus in cacti {
                 anyCactus.removeAllActions()
             }
@@ -185,7 +194,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //destroy scene
         self.removeAllChildren()
-        jump.jumps = 0
         //go to game over scene
         let overScene = GameOverScene(size: view!.bounds.size)
         overScene.scaleMode = .AspectFill

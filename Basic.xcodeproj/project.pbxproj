@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		93000EF51A54B995007020D8 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93000EF41A54B995007020D8 /* GameOverScene.swift */; };
 		9333E47B1A54E2960021B94F /* Jump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9333E47A1A54E2960021B94F /* Jump.swift */; };
+		93858E081A5602FD00181915 /* Bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93858E071A5602FD00181915 /* Bird.swift */; };
 		9394D2A61A53798700798045 /* Cactus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A51A53798700798045 /* Cactus.swift */; };
 		9394D2A81A5387CD00798045 /* Sky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A71A5387CD00798045 /* Sky.swift */; };
 		9394D2AA1A538D1600798045 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A91A538D1600798045 /* Ground.swift */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		93000EF41A54B995007020D8 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		9333E47A1A54E2960021B94F /* Jump.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jump.swift; sourceTree = "<group>"; };
+		93858E071A5602FD00181915 /* Bird.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bird.swift; sourceTree = "<group>"; };
 		9394D2A51A53798700798045 /* Cactus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cactus.swift; sourceTree = "<group>"; };
 		9394D2A71A5387CD00798045 /* Sky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sky.swift; sourceTree = "<group>"; };
 		9394D2A91A538D1600798045 /* Ground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				93000EF41A54B995007020D8 /* GameOverScene.swift */,
 				93E14FA31A5275D400C16E42 /* Cowboy.swift */,
 				9394D2A51A53798700798045 /* Cactus.swift */,
+				93858E071A5602FD00181915 /* Bird.swift */,
 				9394D2A71A5387CD00798045 /* Sky.swift */,
 				9394D2A91A538D1600798045 /* Ground.swift */,
 				9333E47A1A54E2960021B94F /* Jump.swift */,
@@ -239,6 +242,7 @@
 				9333E47B1A54E2960021B94F /* Jump.swift in Sources */,
 				9394D2AA1A538D1600798045 /* Ground.swift in Sources */,
 				B16AF7EE1A4D0973000F6B6A /* GameViewController.swift in Sources */,
+				93858E081A5602FD00181915 /* Bird.swift in Sources */,
 				93E14FA41A5275D400C16E42 /* Cowboy.swift in Sources */,
 				B1C241E41A4B4E8100D1F670 /* AppDelegate.swift in Sources */,
 				9394D2A81A5387CD00798045 /* Sky.swift in Sources */,

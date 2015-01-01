@@ -39,13 +39,14 @@ class Cowboy : SKSpriteNode {
         
         self.size = CGSize(width: view.bounds.width/12, height: view.bounds.width/12)
         self.position = cowPos
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
+        let size = CGSize(width: self.size.width * 2/3, height: self.size.height)
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         self.physicsBody?.mass = CGFloat(0.2)
         
         self.physicsBody?.categoryBitMask = GameScene.types.Hero.rawValue
-        self.physicsBody?.contactTestBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Ground.rawValue
+        self.physicsBody?.contactTestBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Bird.rawValue
+        
         self.physicsBody?.collisionBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Ground.rawValue
-        self.physicsBody?.restitution = 0.0
         self.physicsBody?.dynamic = true
         setUpRunningAnim()
         self.runAction(cowRun)
@@ -57,18 +58,17 @@ class Cowboy : SKSpriteNode {
     
     func shoot() {
          //add these to current position to get gun location
-       // let gunY = 7/11 * self.size.height
-        //let gunX = 20/23 * self.size.width
         let shootPoint = CGPoint(x: self.position.x/100, y: self.position.y/100)
         let bullet = SKSpriteNode(imageNamed: "bullet")
-        bullet.size = CGSize(width: self.size.width, height: self.size.height)
+        bullet.size = CGSize(width: self.size.width, height: self.size.width)
         bullet.position = shootPoint
-        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
-        bullet.physicsBody?.dynamic = false
+        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width/6, height: self.size.width/6))
+        bullet.physicsBody?.dynamic = true
+        bullet.physicsBody?.affectedByGravity = false
         bullet.physicsBody?.categoryBitMask = GameScene.types.Bullet.rawValue
-        bullet.physicsBody?.contactTestBitMask = 0
-        bullet.physicsBody?.collisionBitMask = 0
-        bullet.runAction(SKAction.moveByX(self.size.width*13, y: 0.0, duration: 1.0))
+        bullet.physicsBody?.contactTestBitMask = GameScene.types.Bird.rawValue
+        bullet.physicsBody?.collisionBitMask = GameScene.types.Bird.rawValue
+        bullet.runAction(SKAction.moveByX(self.size.width*13, y: 0.0, duration: 0.5))
         bulletNode.addChild(bullet)
     }
     
