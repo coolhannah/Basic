@@ -41,8 +41,12 @@ class Ground : SKNode {
         let resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
         moveIt = SKAction.repeatActionForever(SKAction.sequence([moveground, resetground]))
         
+        
         ground1.runAction(moveIt)
         ground2.runAction(moveIt)
+        
+        ground1.removeFromParent()
+        ground2.removeFromParent()
         
         self.addChild(ground1)
         self.addChild(ground2)
@@ -57,12 +61,6 @@ class Ground : SKNode {
         ground2.position = CGPoint(x: positions.x * 3, y: positions.y)
         ground1.runAction(moveIt)
         ground2.runAction(moveIt)
-    }
-    
-    func shake() {
-        let moveLeft = SKAction.moveByX(positions.x/12, y:0 , duration: NSTimeInterval(0.5))
-        let moveRight = SKAction.moveByX(-positions.x/12, y:0 , duration: NSTimeInterval(0.5))
-        let shakeAction = SKAction.repeatAction(SKAction.sequence([moveLeft, moveRight]), count: 20)
     }
     
     override init() {
