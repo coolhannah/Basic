@@ -11,26 +11,44 @@ import SpriteKit
 
 class GameOverScene : SKScene {
     
-    var sky = Sky()
     var viewer = SKView()
     var label = SKLabelNode()
     
     override func didMoveToView(view: SKView) {
         viewer = view
         
-        sky = Sky(view: view)
-        label.text = "You died! Tap to Replay"
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if(userDefaults.objectForKey("user") == nil) {
+            userDefaults.setValue(jump.jumps, forKey: "user")
+            userDefaults.synchronize()
+        }
+        else {
+            let highScore = userDefaults.integerForKey("user")
+            if(highScore < jump.jumps) {
+                userDefaults.setValue(jump.jumps, forKey: "user")
+                userDefaults.synchronize()
+            }
+        }
+        
+        let highScore = userDefaults.integerForKey("user")
+        
+        if(jump.jumps == 1) {
+            label.text = "1 jump! Play Again?"
+        }
+        else {
+        label.text = "\(jump.jumps) jumps! High Score: \(highScore) "
+        }
+        label.fontColor = UIColor.whiteColor()
+        label.fontName = "Comic Sans"
         label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
         
         self.addChild(label)
-        self.addChild(sky)
-        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        //initialize the scene to fill screen
-        let scene = GameScene(size: self.viewer.bounds.size)
-        scene.scaleMode = .AspectFill
+        let gameScene = GameScene(size: viewer.bounds.size)
+        gameScene.scaleMode = .AspectFill
         
         // Configure the view that this class controls
         let skView = self.viewer as SKView
@@ -39,7 +57,7 @@ class GameOverScene : SKScene {
         var trans : SKTransition = SKTransition.fadeWithDuration(0.5)
         
         //display the game scene through our main view
-        skView.presentScene(scene, transition: trans)
+        skView.presentScene(gameScene, transition: trans)
         
     }
     
