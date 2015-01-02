@@ -28,7 +28,7 @@ class Sky : SKNode {
         sky2.position = CGPoint(x: skyPos.x * 3, y: skyPos.y)
         sky2.size = view.bounds.size
         
-        let moveSky = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(2))
+        let moveSky = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(5))
         let resetSky = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
         
         move = SKAction.repeatActionForever(SKAction.sequence([moveSky, resetSky]))

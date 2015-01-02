@@ -24,11 +24,12 @@ class Cactus : SKSpriteNode {
     
     init(view: SKView) {
         let cacTxture = SKTexture(imageNamed: "cactus")
+        cacTxture.filteringMode = .Nearest
         super.init(texture: cacTxture, color: nil, size: cacTxture.size())
         
         viewWidth = view.bounds.width
-        self.size = CGSize( width: view.bounds.height/7, height: view.bounds.height/7 )
-        offscrnPt = CGPoint(x: viewWidth * 9/8, y: view.bounds.height / 3 + (self.size.height - 5 )/2)
+        self.size = CGSize( width: view.bounds.height/8, height: view.bounds.height/8 )
+        offscrnPt = CGPoint(x: viewWidth * 9/8, y: view.bounds.height / 3 + (self.size.height)/2)
         self.position = offscrnPt
         self.physicsBody = SKPhysicsBody(texture: cacTxture, alphaThreshold: 0.0001, size: self.size)
         self.physicsBody?.dynamic = false

@@ -40,7 +40,7 @@ class Cowboy : SKSpriteNode {
         self.size = CGSize(width: view.bounds.width/12, height: view.bounds.width/12)
         self.position = cowPos
         let size = CGSize(width: self.size.width * 2/3, height: self.size.height)
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2)
         self.physicsBody?.mass = CGFloat(0.2)
         
         self.physicsBody?.categoryBitMask = GameScene.types.Hero.rawValue

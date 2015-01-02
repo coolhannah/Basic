@@ -14,9 +14,14 @@ import SpriteKit
 class GameViewController: UIViewController {
     
     override func viewDidLoad() {
+        let arrOfImages: [SKTexture] = [SKTexture(imageNamed: "background"), SKTexture(imageNamed: "bullet"), SKTexture(imageNamed: "blueJay1"), SKTexture(imageNamed: "blueJay2"), SKTexture(imageNamed: "bullet"), SKTexture(imageNamed: "cactus"), SKTexture(imageNamed: "gameOverBkgd"), SKTexture(imageNamed: "Ground"), SKTexture(imageNamed: "Sky"),  ]
+        for texture in arrOfImages {
+            texture.preloadWithCompletionHandler({
+                //no need to do anything
+            })
+        }
         
         super.viewDidLoad()
-        
         //initialize the scene to fill screen
         let scene = GameScene(size: self.view.bounds.size)
         scene.scaleMode = .AspectFill

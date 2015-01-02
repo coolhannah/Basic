@@ -17,23 +17,30 @@ class Bird : SKSpriteNode {
     init(view: SKView) {
         let texture = SKTexture(imageNamed: "blueJay1")
         super.init(texture: texture, color: nil, size: texture.size())
-        self.size = CGSize(width: view.bounds.width/12, height: view.bounds.width/12)
+        self.size = texture.size()
+        self.xScale = 2.0
+        self.yScale = 2.0
         offscrnPt = CGPoint(x: view.bounds.width * 9/8, y: view.bounds.height * 4/7 )
         self.position = offscrnPt
-        let size = CGSize(width: self.size.width * 2/3, height: self.size.height)
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2)
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = GameScene.types.Bird.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue
         self.physicsBody?.collisionBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue
-        self.physicsBody?.dynamic = false
+        self.physicsBody?.dynamic = true
+        self.physicsBody?.affectedByGravity = false
         setUpFlappingAnim()
         self.runAction(flap)
     }
     
     func setUpFlappingAnim() {
-        var arr: [SKTexture] = [SKTexture(imageNamed: "blueJay1"), SKTexture(imageNamed: "blueJay2")]
-        let flapAnim = SKAction.animateWithTextures(arr, timePerFrame: 0.5)
+        let txt1 = SKTexture(imageNamed: "blueJay1")
+        let txt2 = SKTexture(imageNamed: "blueJay2")
+        txt1.filteringMode = .Nearest
+        txt2.filteringMode = .Nearest
+        
+        var arr: [SKTexture] = [txt1, txt2]
+        let flapAnim = SKAction.animateWithTextures(arr, timePerFrame: 0.3)
         flap = SKAction.repeatActionForever(flapAnim)
     }
     

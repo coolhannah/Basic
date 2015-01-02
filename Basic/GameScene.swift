@@ -26,7 +26,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var addJump : Bool = false
     
     //labels
-    var label = SKLabelNode()
+    let begin = SKNode()
+    
+    var label = SKSpriteNode()
+    var clickToBegin = SKLabelNode()
     var jumpCounter = SKLabelNode()
     
     //handle "players"
@@ -50,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameIsOver = false
         
         //physics of world
-        self.physicsWorld.gravity.dy = CGFloat(-9.8)
+        self.physicsWorld.gravity.dy = CGFloat(-10)
         self.physicsWorld.contactDelegate  = self
         //generate background
         sky = Sky(view: view);
@@ -60,11 +63,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cowboySprite = Cowboy(view: view)
         
         //configure labels
-        label = SKLabelNode(text: "Ready?")
-        label.fontName = "Comic Sans"
-        label.fontColor = UIColor.blackColor()
-        label.fontSize = CGFloat(64)
+        let labelTexture = SKTexture(imageNamed: "TordyHopper")
+        labelTexture.filteringMode = .Nearest
+        label = SKSpriteNode(texture: labelTexture, size: CGSize(width: self.size.width/2, height: self.size.height/2))
         label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
+        
+        clickToBegin.text = "Tap to Begin"
+        clickToBegin.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/4)
+        var addClickToBegin = SKAction.runBlock({
+            self.begin.addChild(self.clickToBegin)
+            })
+        var waitABit = SKAction.waitForDuration(0.5)
+        var removeClick = SKAction.runBlock({
+            while(self.clickToBegin.parent != nil) {
+            self.clickToBegin.removeFromParent()
+            }
+            })
+        
+        var action = SKAction.repeatActionForever(SKAction.sequence([addClickToBegin, waitABit, removeClick, waitABit]))
+        begin.runAction(action, withKey: "stop")
         
         jumpCounter = SKLabelNode(text: "0")
         jumpCounter.fontName = "Comic Sans"
@@ -78,6 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(label)
         self.addChild(cactusNode)
         self.addChild(birdNode)
+        self.addChild(begin)
         
     }
     
@@ -93,12 +111,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gameIsOver = true
             canJump = false
             
+            if(collision == types.Hero.rawValue | types.Bird.rawValue) {
+                if (contact.bodyA.categoryBitMask == types.Bird.rawValue) {
+                    contact.bodyA.node?.removeAllActions()
+                    contact.bodyA.node?.physicsBody?.applyImpulse(CGVector(dx: 20.0, dy: 20.0))
+                    contact.bodyA.node?.physicsBody?.affectedByGravity = true
+                } else {
+                    contact.bodyB.node?.removeAllActions()
+                    contact.bodyB.node?.physicsBody?.applyImpulse(CGVector(dx: 20.0, dy: 20.0))
+                    contact.bodyB.node?.physicsBody?.affectedByGravity = true
+                }
+            }
+            
             //let cowboySprite fly away
             cowboySprite.removeAllActions()
             cowboySprite.physicsBody?.dynamic = false
             var waitFew = SKAction.waitForDuration(0.5)
             var popUp = SKAction.moveByX(0, y: self.size.height/4, duration: 0.25)
-            var falldown = SKAction.moveByX(0, y: -self.size.height, duration: 0.5)
+            var falldown = SKAction.moveByX(0, y: -self.size.height * 2, duration: 0.5)
             cowboySprite.runAction(SKAction.sequence([waitFew, popUp, falldown]))
             //reset bkgd
             sky.stop()
@@ -114,9 +144,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         //bullet kill
         else if(collision == (types.Bird.rawValue | types.Bullet.rawValue)) {
-            println("kill")
-            contact.bodyA.node?.removeFromParent()
-            contact.bodyB.node?.removeFromParent()
+            jump.jumps += 2
+            var node = contact.bodyA.node
+            var node2 = contact.bodyB.node
+            while(node?.parent? != nil) {
+                node?.removeFromParent()
+            }
+            while(node2?.parent? != nil) {
+                node2?.removeFromParent()
+            }
+            
+            addJump = true
         }
         //collision with ground
         else if(collision == (types.Hero.rawValue | types.Ground.rawValue))
@@ -146,6 +184,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ready to begin!   
         if(!readyToBegin) {
             label.removeFromParent()
+            clickToBegin.text = ""
+            clickToBegin.removeFromParent()
             self.addChild(jumpCounter)
             readyToBegin = true
         }
