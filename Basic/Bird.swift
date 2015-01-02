@@ -18,13 +18,13 @@ class Bird : SKSpriteNode {
         let texture = SKTexture(imageNamed: "blueJay1")
         super.init(texture: texture, color: nil, size: texture.size())
         self.size = CGSize(width: view.bounds.width/12, height: view.bounds.width/12)
-        offscrnPt = CGPoint(x: view.bounds.width * 9/8, y: view.bounds.height / 3 + self.size.height)
+        offscrnPt = CGPoint(x: view.bounds.width * 9/8, y: view.bounds.height * 4/7 )
         self.position = offscrnPt
         let size = CGSize(width: self.size.width * 2/3, height: self.size.height)
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
-        
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
+        self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = GameScene.types.Bird.rawValue
-        self.physicsBody?.contactTestBitMask = GameScene.types.Hero.rawValue
+        self.physicsBody?.contactTestBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue
         self.physicsBody?.collisionBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue
         self.physicsBody?.dynamic = false
         setUpFlappingAnim()

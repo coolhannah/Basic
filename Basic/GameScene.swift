@@ -86,20 +86,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var categoryA = contact.bodyA.categoryBitMask
         var categoryB = contact.bodyB.categoryBitMask
         
-        println(categoryA.description + " " + categoryB.description)
+        let collision = categoryA | categoryB
         
         //player death
-        if(categoryA == 2 && (categoryB == 16 || categoryB == 4))
-        {
+        if(collision == (types.Hero.rawValue | types.Bird.rawValue) || collision == (types.Hero.rawValue | types.Enemy.rawValue)) {
             gameIsOver = true
             canJump = false
             
             //let cowboySprite fly away
             cowboySprite.removeAllActions()
             cowboySprite.physicsBody?.dynamic = false
-            var popUp = SKAction.moveByX(0, y: self.size.height/4, duration: 0.5)
+            var waitFew = SKAction.waitForDuration(0.5)
+            var popUp = SKAction.moveByX(0, y: self.size.height/4, duration: 0.25)
             var falldown = SKAction.moveByX(0, y: -self.size.height, duration: 0.5)
-            cowboySprite.runAction(SKAction.sequence([popUp, falldown]))
+            cowboySprite.runAction(SKAction.sequence([waitFew, popUp, falldown]))
             //reset bkgd
             sky.stop()
             ground.stop()
@@ -112,12 +112,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.runAction(SKAction.sequence([wait, block]))
             
         }
-        //collision with bullet
-        else if(categoryB == 8 && categoryA == 16) {
+        //bullet kill
+        else if(collision == (types.Bird.rawValue | types.Bullet.rawValue)) {
+            println("kill")
             contact.bodyA.node?.removeFromParent()
+            contact.bodyB.node?.removeFromParent()
         }
         //collision with ground
-        else if((categoryA == 1 && categoryB == 2) || (categoryB == 1 && categoryA == 2))
+        else if(collision == (types.Hero.rawValue | types.Ground.rawValue))
         {
             canJump = true
         }
@@ -151,8 +153,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    //last time the cactus was spawned
+    var lastBird : Double = 0.0
     var lastCactus : Double = 0.0
+    
     
     override func update(currentTime: CFTimeInterval) {
         
@@ -166,10 +169,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             cactusNode.addChild(newCactus)
             lastCactus = currentTime
             }
-            if(randomNum == 2) {
-            let newBird = Bird(view: view!)
-            newBird.sendBird()
-            cactusNode.addChild(newBird)
+        }
+        
+        //spawning a new bird
+        if(!gameIsOver && readyToBegin && currentTime - lastBird > 2) {
+            if(randomNum == 6) {
+                var newBird = Bird(view: view!)
+                newBird.sendBird()
+                birdNode.addChild(newBird)
+                lastBird = currentTime
             }
         }
         
@@ -178,6 +186,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             var cacti = cactusNode.children
             for anyCactus in cacti {
                 anyCactus.removeAllActions()
+            }
+            var birds = birdNode.children
+            for anyBird in birds {
+                anyBird.removeAllActions()
             }
         }
         
@@ -197,7 +209,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //go to game over scene
         let overScene = GameOverScene(size: view!.bounds.size)
         overScene.scaleMode = .AspectFill
-        var trans = SKTransition.fadeWithDuration(0.5)
+        var trans = SKTransition.fadeWithDuration(0.75)
         
         self.view!.presentScene(overScene, transition: trans )
     }
