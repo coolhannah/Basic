@@ -23,7 +23,7 @@ class Cactus : SKSpriteNode {
     }
     
     init(view: SKView) {
-        let cacTxture = SKTexture(imageNamed: "cactus")
+        let cacTxture = textures.atlas.textureNamed("cactus")
         cacTxture.filteringMode = .Nearest
         super.init(texture: cacTxture, color: nil, size: cacTxture.size())
         
@@ -35,7 +35,7 @@ class Cactus : SKSpriteNode {
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GameScene.types.Enemy.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Hero.rawValue
-        self.physicsBody?.collisionBitMask = GameScene.types.Hero.rawValue
+        self.physicsBody?.collisionBitMask = 0
     }
     
     func sendCactus() {

@@ -13,8 +13,8 @@ class Ground : SKNode {
     
     let groundTexture = SKTexture(imageNamed: "Ground")
     
-    let ground1 = SKSpriteNode(texture: SKTexture(imageNamed: "Ground"))
-    let ground2 = SKSpriteNode(texture: SKTexture(imageNamed: "Ground"))
+    let ground1 = SKSpriteNode(texture: textures.atlas.textureNamed( "Ground"))
+    let ground2 = SKSpriteNode(texture: textures.atlas.textureNamed( "Ground"))
     
     var moveIt = SKAction()
     

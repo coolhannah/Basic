@@ -16,6 +16,11 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        textures.atlas.preloadWithCompletionHandler({
+            
+        })
+        
         //initialize the scene to fill screen
         let scene = GameScene(size: self.view.bounds.size)
         scene.scaleMode = .AspectFill
@@ -26,6 +31,7 @@ class GameViewController: UIViewController {
         
         //display the game scene through our main view
         skView.presentScene(scene)
+        
     }
     
     override func shouldAutorotate() -> Bool {

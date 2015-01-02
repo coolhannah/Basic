@@ -28,10 +28,12 @@ class Cowboy : SKSpriteNode {
     
     //initializer
     init(view: SKView) {
+        let atlas = textures.atlas
+        
         //variables
         groundY = CGFloat( view.bounds.height/3 )
         cowPos = CGPoint(x: view.bounds.width/8, y: groundY * 5/4)
-        let texture = SKTexture(imageNamed: "sprite_1")
+        let texture = SKTexture(imageNamed:"sprite_1")
         
         
         //superclass init
@@ -46,7 +48,7 @@ class Cowboy : SKSpriteNode {
         self.physicsBody?.categoryBitMask = GameScene.types.Hero.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Bird.rawValue
         
-        self.physicsBody?.collisionBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Ground.rawValue
+        self.physicsBody?.collisionBitMask = GameScene.types.Ground.rawValue
         self.physicsBody?.dynamic = true
         setUpRunningAnim()
         self.runAction(cowRun)
@@ -77,7 +79,7 @@ class Cowboy : SKSpriteNode {
     {
         var arr: [SKTexture] = Array<SKTexture>()
         for var i: Int = 1; i <= 8; ++i {
-            arr.append(SKTexture(imageNamed: "sprite_\(i)"))
+            arr.append(SKTexture(imageNamed:"sprite_\(i)"))
             arr[i-1].filteringMode = .Nearest
         }
         let heroAnim = SKAction.animateWithTextures(arr, timePerFrame: 0.06)

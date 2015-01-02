@@ -50,13 +50,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
+        //load atlas
+        
         //reset booleans
         canJump = false
         readyToBegin = false
         gameIsOver = false
         
         //physics of world
-        self.physicsWorld.gravity.dy = CGFloat(-10)
+        self.physicsWorld.gravity.dy = CGFloat(-12)
         self.physicsWorld.contactDelegate  = self
         //generate background
         sky = Sky(view: view);
@@ -66,13 +68,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cowboySprite = Cowboy(view: view)
         
         //configure labels
-        let labelTexture = SKTexture(imageNamed: "TordyHopper")
+        let labelTexture = textures.atlas.textureNamed("TordyHopper")
         labelTexture.filteringMode = .Nearest
         label = SKSpriteNode(texture: labelTexture, size: CGSize(width: self.size.width/2, height: self.size.height/2))
         label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
         
-        let shootText = SKTexture(imageNamed: "shoot"); shootText.filteringMode = .Nearest
-        let jumpText = SKTexture(imageNamed: "up"); jumpText.filteringMode = .Nearest
+        let shootText = textures.atlas.textureNamed("shoot"); shootText.filteringMode = .Nearest
+        let jumpText = textures.atlas.textureNamed("up"); jumpText.filteringMode = .Nearest
         
         jumpLabel =
             SKSpriteNode(texture: jumpText, size: CGSize(width: view.bounds.width/12, height: view.bounds.width/12))
@@ -186,10 +188,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         var touchLocation = touches.anyObject()?.locationInView(self.view!)
         
-        
         //reading in a jump
         if(canJump && readyToBegin && !gameIsOver && touchLocation?.x < self.view!.bounds.width/2) {
-            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 95.0))
+            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
             canJump = false;
             addJump = true
             jump.jumps++
@@ -259,14 +260,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
+    var called = false
     func gameOver() {
         //go to game over scene
+        if(!called) {
         let overScene = GameOverScene(size: view!.bounds.size)
         overScene.scaleMode = .AspectFill
         var trans = SKTransition.fadeWithDuration(0.75)
         
         self.view!.presentScene(overScene, transition: trans )
+            called = true
+        }
     }
     
     

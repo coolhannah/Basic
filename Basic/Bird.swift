@@ -15,7 +15,7 @@ class Bird : SKSpriteNode {
     let offscrnPt = CGPoint()
     
     init(view: SKView) {
-        let texture = SKTexture(imageNamed: "blueJay1")
+        let texture = SKTexture(imageNamed:"blueJay1")
         super.init(texture: texture, color: nil, size: texture.size())
         self.size = texture.size()
         self.xScale = 2.0
@@ -33,8 +33,8 @@ class Bird : SKSpriteNode {
     }
     
     func setUpFlappingAnim() {
-        let txt1 = SKTexture(imageNamed: "blueJay1")
-        let txt2 = SKTexture(imageNamed: "blueJay2")
+        let txt1 = SKTexture(imageNamed:"blueJay1")
+        let txt2 = SKTexture(imageNamed:"blueJay2")
         txt1.filteringMode = .Nearest
         txt2.filteringMode = .Nearest
         

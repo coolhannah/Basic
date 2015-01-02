@@ -35,7 +35,7 @@ class GameOverScene : SKScene {
         let highScore = userDefaults.integerForKey("user")
     
         label.text = "your score: \(jump.jumps)"
-        label.fontColor = UIColor.cyanColor()
+        label.fontColor = UIColor.whiteColor()
         label.position = CGPoint(x: view.bounds.width/3, y: view.bounds.height * 2/3)
         
         highLabel.text = "high score: \(highScore)"
@@ -47,12 +47,10 @@ class GameOverScene : SKScene {
         let bkgd = SKSpriteNode(texture: gameOverBkgd, size: view.bounds.size)
         bkgd.position = CGPoint(x: view.bounds.width / 2 , y: view.bounds.height/2)
         
-
-        let sky = Sky(view: view)
-        let ground = Ground(view: view)
-        
-        self.addChild(sky)
-        self.addChild(ground)
+        let blue = SKSpriteNode(imageNamed: "blue")
+        blue.position = bkgd.position
+        blue.size = view.bounds.size
+        self.addChild(blue)
         self.addChild(bkgd)
         self.addChild(label)
         self.addChild(highLabel)
@@ -61,6 +59,7 @@ class GameOverScene : SKScene {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.removeAllChildren()
         jump.jumps = 0
+        transition()
         let quickNode = SKNode()
         self.addChild(quickNode)
         
