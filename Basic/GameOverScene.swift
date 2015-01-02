@@ -63,15 +63,27 @@ class GameOverScene : SKScene {
         jump.jumps = 0
         let quickNode = SKNode()
         self.addChild(quickNode)
-        let waiting = SKTexture(imageNamed: "waiting")
-        waiting.filteringMode = .Nearest
-        let waits = SKSpriteNode(texture: waiting, size: viewer.bounds.size)
-        waits.position = CGPoint(x: viewer.bounds.width/2, y: viewer.bounds.height/2)
-        quickNode.addChild(waits)
+        
+        let hopper = SKTexture(imageNamed: "TordyHopper")
+        hopper.filteringMode = .Nearest
+        
+        let hopText = SKSpriteNode(texture: hopper, size: CGSize(width: viewer.bounds.width/2, height: viewer.bounds.height/2))
+        hopText.position = CGPoint(x: viewer.bounds.width/2, y: viewer.bounds.height/2)
+        hopText.zPosition = 1
+        
+        let bkgd = SKSpriteNode(imageNamed: "blue")
+        bkgd.position = hopText.position
+        bkgd.size = viewer.bounds.size
+        bkgd.zPosition = 0
+        
+        quickNode.addChild(bkgd)
+        quickNode.addChild(hopText)
+        
         let trans = SKAction.runBlock({
                 self.transition()
             })
-        let wait = SKAction.waitForDuration(0.01)
+        let wait = SKAction.waitForDuration(0.1)
+        
         quickNode.runAction(SKAction.sequence([wait, trans]))
     }
     
@@ -82,10 +94,8 @@ class GameOverScene : SKScene {
         
         // Configure the view that this class controls
         let skView = self.viewer as SKView
-        skView.ignoresSiblingOrder = true
         
-        var trans : SKTransition = SKTransition.fadeWithDuration(0.25)
-        
+        var trans = SKTransition.crossFadeWithDuration(0.5)
         //display the game scene through our main view
         skView.presentScene(gameScene, transition: trans)
     }

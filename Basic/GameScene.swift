@@ -24,11 +24,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var readyToBegin : Bool = false
     var gameIsOver : Bool = false
     var addJump : Bool = false
+    var viewLoaded : Bool = false
     
     //labels
     let begin = SKNode()
     
     var label = SKSpriteNode()
+    var jumpLabel = SKSpriteNode()
+    var shootLabel = SKSpriteNode()
     var clickToBegin = SKLabelNode()
     var jumpCounter = SKLabelNode()
     
@@ -68,17 +71,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label = SKSpriteNode(texture: labelTexture, size: CGSize(width: self.size.width/2, height: self.size.height/2))
         label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
         
+        let shootText = SKTexture(imageNamed: "shoot"); shootText.filteringMode = .Nearest
+        let jumpText = SKTexture(imageNamed: "up"); jumpText.filteringMode = .Nearest
+        
+        jumpLabel =
+            SKSpriteNode(texture: jumpText, size: CGSize(width: view.bounds.width/12, height: view.bounds.width/12))
+        jumpLabel.position = CGPoint(x: view.bounds.width/12, y: view.bounds.height/12)
+        begin.addChild(jumpLabel)
+        
+        shootLabel =
+        SKSpriteNode(texture: shootText,
+            size: CGSize(width: view.bounds.width/12, height: view.bounds.width/12))
+        shootLabel.position = CGPoint(x: view.bounds.width * 11/12, y: view.bounds.height/12)
+        begin.addChild(shootLabel)
+        
         clickToBegin.text = "Tap to Begin"
         clickToBegin.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/4)
         var addClickToBegin = SKAction.runBlock({
             self.begin.addChild(self.clickToBegin)
-            })
+        })
         var waitABit = SKAction.waitForDuration(0.5)
         var removeClick = SKAction.runBlock({
             while(self.clickToBegin.parent != nil) {
             self.clickToBegin.removeFromParent()
             }
-            })
+        })
         
         var action = SKAction.repeatActionForever(SKAction.sequence([addClickToBegin, waitABit, removeClick, waitABit]))
         begin.runAction(action, withKey: "stop")
@@ -96,7 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(cactusNode)
         self.addChild(birdNode)
         self.addChild(begin)
-        
+        viewLoaded = true
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -172,7 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //reading in a jump
         if(canJump && readyToBegin && !gameIsOver && touchLocation?.x < self.view!.bounds.width/2) {
-            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
+            cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 95.0))
             canJump = false;
             addJump = true
             jump.jumps++
@@ -182,10 +199,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //ready to begin!   
-        if(!readyToBegin) {
+        if(!readyToBegin && viewLoaded) {
             label.removeFromParent()
             clickToBegin.text = ""
             clickToBegin.removeFromParent()
+            begin.removeAllChildren()
             self.addChild(jumpCounter)
             readyToBegin = true
         }
@@ -243,9 +261,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func gameOver() {
-        
-        //destroy scene
-        self.removeAllChildren()
         //go to game over scene
         let overScene = GameOverScene(size: view!.bounds.size)
         overScene.scaleMode = .AspectFill

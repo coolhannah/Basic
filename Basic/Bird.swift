@@ -22,8 +22,7 @@ class Bird : SKSpriteNode {
         self.yScale = 2.0
         offscrnPt = CGPoint(x: view.bounds.width * 9/8, y: view.bounds.height * 4/7 )
         self.position = offscrnPt
-        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2)
-        self.physicsBody?.usesPreciseCollisionDetection = true
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width * 2/3)
         self.physicsBody?.categoryBitMask = GameScene.types.Bird.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue
         self.physicsBody?.collisionBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue

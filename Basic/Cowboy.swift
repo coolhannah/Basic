@@ -31,7 +31,7 @@ class Cowboy : SKSpriteNode {
         //variables
         groundY = CGFloat( view.bounds.height/3 )
         cowPos = CGPoint(x: view.bounds.width/8, y: groundY * 5/4)
-        let texture = SKTexture(imageNamed: "cowboy")
+        let texture = SKTexture(imageNamed: "sprite_1")
         
         
         //superclass init
@@ -62,14 +62,13 @@ class Cowboy : SKSpriteNode {
         let bullet = SKSpriteNode(imageNamed: "bullet")
         bullet.size = CGSize(width: self.size.width/12, height: self.size.width/12)
         bullet.position = shootPoint
-        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width/8, height: self.size.width/8))
+        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: bullet.size.width, height: bullet.size.width))
         bullet.physicsBody?.dynamic = true
         bullet.physicsBody?.affectedByGravity = false
-        bullet.physicsBody?.usesPreciseCollisionDetection = true
         bullet.physicsBody?.categoryBitMask = GameScene.types.Bullet.rawValue
         bullet.physicsBody?.contactTestBitMask = GameScene.types.Bird.rawValue
         bullet.physicsBody?.collisionBitMask = GameScene.types.Bird.rawValue
-        bullet.runAction(SKAction.moveByX(self.size.width*13, y: 0.0, duration: 0.75))
+        bullet.runAction(SKAction.moveByX(self.size.width*13, y: 0.0, duration: 1))
         bulletNode.addChild(bullet)
     }
     
