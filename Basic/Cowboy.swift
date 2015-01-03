@@ -58,22 +58,6 @@ class Cowboy : SKSpriteNode {
         
     }
     
-    func shoot() {
-         //add these to current position to get gun location
-        let shootPoint = CGPoint(x: self.position.x/100, y: self.position.y/100)
-        let bullet = SKSpriteNode(imageNamed: "bullet")
-        bullet.size = CGSize(width: self.size.width/12, height: self.size.width/12)
-        bullet.position = shootPoint
-        bullet.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: bullet.size.width, height: bullet.size.width))
-        bullet.physicsBody?.dynamic = true
-        bullet.physicsBody?.affectedByGravity = false
-        bullet.physicsBody?.categoryBitMask = GameScene.types.Bullet.rawValue
-        bullet.physicsBody?.contactTestBitMask = GameScene.types.Bird.rawValue
-        bullet.physicsBody?.collisionBitMask = GameScene.types.Bird.rawValue
-        bullet.runAction(SKAction.moveByX(self.size.width*13, y: 0.0, duration: 1))
-        bulletNode.addChild(bullet)
-    }
-    
     
     func setUpRunningAnim()
     {

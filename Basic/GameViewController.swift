@@ -14,7 +14,6 @@ import SpriteKit
 class GameViewController: UIViewController {
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         textures.atlas.preloadWithCompletionHandler({
