@@ -20,9 +20,9 @@ class Bird : SKSpriteNode {
         self.size = texture.size()
         self.xScale = 2.0
         self.yScale = 2.0
-        offscrnPt = CGPoint(x: view.bounds.width * 9/8, y: view.bounds.height * 4/7 )
+        offscrnPt = CGPoint(x: view.bounds.width, y: view.bounds.height * 4/7 )
         self.position = offscrnPt
-        self.physicsBody = SKPhysicsBody(texture: texture, size: self.size)
+        self.physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: self.size.width/2, height: self.size.height/2))
         self.physicsBody?.categoryBitMask = GameScene.types.Bird.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Bullet.rawValue | GameScene.types.Hero.rawValue
         self.physicsBody?.collisionBitMask = GameScene.types.Bullet.rawValue
@@ -46,7 +46,7 @@ class Bird : SKSpriteNode {
     
     func sendBird() {
         self.position = offscrnPt
-        self.runAction(SKAction.moveByX(-self.size.width * 16, y: 0, duration: NSTimeInterval(1.2)))
+        self.runAction(SKAction.moveByX(-self.size.width * 16, y: 0, duration: NSTimeInterval(3)))
     }
     
     override init() {

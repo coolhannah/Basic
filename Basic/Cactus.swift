@@ -31,11 +31,11 @@ class Cactus : SKSpriteNode {
         self.size = CGSize( width: view.bounds.height/8, height: view.bounds.height/8 )
         offscrnPt = CGPoint(x: viewWidth * 9/8, y: view.bounds.height / 3 + (self.size.height)/2)
         self.position = offscrnPt
-        self.physicsBody = SKPhysicsBody(texture: cacTxture, alphaThreshold: 0.0001, size: self.size)
+        self.physicsBody = SKPhysicsBody(texture: cacTxture, size: self.size)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GameScene.types.Enemy.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Hero.rawValue
-        self.physicsBody?.collisionBitMask = 0
+        self.physicsBody?.collisionBitMask = GameScene.types.Hero.rawValue
     }
     
     func sendCactus() {

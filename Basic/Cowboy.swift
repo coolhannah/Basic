@@ -9,13 +9,11 @@
 import Foundation
 import SpriteKit
 
+
 class Cowboy : SKSpriteNode {
     
-    var cowPos = CGPoint()
-    var groundY = CGFloat()
     var cowRun = SKAction()
-    let bulletNode = SKNode()
-    
+    var cowPos = CGPoint()
     
     override init() {
         //do nothing
@@ -31,8 +29,8 @@ class Cowboy : SKSpriteNode {
         let atlas = textures.atlas
         
         //variables
-        groundY = CGFloat( view.bounds.height/3 )
-        cowPos = CGPoint(x: view.bounds.width/8, y: groundY * 5/4)
+        
+        cowPos = CGPoint(x: view.bounds.width/8, y: classVar.groundY + view.bounds.width/24)
         let texture = SKTexture(imageNamed:"sprite_1")
         
         
@@ -42,19 +40,17 @@ class Cowboy : SKSpriteNode {
         self.size = CGSize(width: view.bounds.width/12, height: view.bounds.width/12)
         self.position = cowPos
         let size = CGSize(width: self.size.width * 2/3, height: self.size.height)
-        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2)
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width * 4/9)
         self.physicsBody?.mass = CGFloat(0.2)
         
         self.physicsBody?.categoryBitMask = GameScene.types.Hero.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Enemy.rawValue | GameScene.types.Bird.rawValue
         
-        self.physicsBody?.collisionBitMask = GameScene.types.Ground.rawValue
+        self.physicsBody?.collisionBitMask = GameScene.types.Ground.rawValue | GameScene.types.Enemy.rawValue
+        self.physicsBody?.restitution = 0
         self.physicsBody?.dynamic = true
         setUpRunningAnim()
         self.runAction(cowRun)
-        
-        //Add bulletNode
-        self.addChild(bulletNode)
         
     }
     

@@ -23,10 +23,9 @@ class Ground : SKNode {
     init(view: SKView) {
         super.init()
         groundTexture.filteringMode = .Nearest
-        let groundY = CGFloat(view.bounds.height/3)
         
         self.physicsBody =
-            SKPhysicsBody(edgeFromPoint: CGPoint(x: -1000, y: groundY), toPoint: CGPoint(x:view.bounds.width * 3/2 , y: groundY))
+            SKPhysicsBody(edgeFromPoint: CGPoint(x: -1000, y: classVar.groundY), toPoint: CGPoint(x:view.bounds.width * 3/2 , y: classVar.groundY))
         self.physicsBody?.categoryBitMask = GameScene.types.Ground.rawValue
         self.physicsBody?.collisionBitMask = GameScene.types.Hero.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Hero.rawValue

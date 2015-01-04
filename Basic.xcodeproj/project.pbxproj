@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		93000EF51A54B995007020D8 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93000EF41A54B995007020D8 /* GameOverScene.swift */; };
-		9333AB351A579ACD004A7CE1 /* Fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB331A579ACD004A7CE1 /* Fire.wav */; };
-		9333AB361A579ACD004A7CE1 /* JumpSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB341A579ACD004A7CE1 /* JumpSound.wav */; };
+		9333AB4A1A57B1D7004A7CE1 /* BirdDeath.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB461A57B1D7004A7CE1 /* BirdDeath.wav */; };
+		9333AB4B1A57B1D7004A7CE1 /* Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB471A57B1D7004A7CE1 /* Death.wav */; };
+		9333AB4C1A57B1D7004A7CE1 /* Fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB481A57B1D7004A7CE1 /* Fire.wav */; };
+		9333AB4D1A57B1D7004A7CE1 /* JumpSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB491A57B1D7004A7CE1 /* JumpSound.wav */; };
 		9333E47B1A54E2960021B94F /* Jump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9333E47A1A54E2960021B94F /* Jump.swift */; };
-		936408A31A571C3A00E0566A /* images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 936408A21A571C3A00E0566A /* images.atlas */; };
-		936408A51A571F5A00E0566A /* Atlas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936408A41A571F5A00E0566A /* Atlas.swift */; };
+		936408A51A571F5A00E0566A /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936408A41A571F5A00E0566A /* structs.swift */; };
+		936D98EF1A58F6B600771B2E /* images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 936D98EE1A58F6B600771B2E /* images.atlas */; };
 		93858E081A5602FD00181915 /* Bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93858E071A5602FD00181915 /* Bird.swift */; };
 		9394D2A61A53798700798045 /* Cactus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A51A53798700798045 /* Cactus.swift */; };
 		9394D2A81A5387CD00798045 /* Sky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A71A5387CD00798045 /* Sky.swift */; };
@@ -40,11 +42,13 @@
 
 /* Begin PBXFileReference section */
 		93000EF41A54B995007020D8 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
-		9333AB331A579ACD004A7CE1 /* Fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Fire.wav; sourceTree = "<group>"; };
-		9333AB341A579ACD004A7CE1 /* JumpSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = JumpSound.wav; sourceTree = "<group>"; };
+		9333AB461A57B1D7004A7CE1 /* BirdDeath.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BirdDeath.wav; sourceTree = "<group>"; };
+		9333AB471A57B1D7004A7CE1 /* Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Death.wav; sourceTree = "<group>"; };
+		9333AB481A57B1D7004A7CE1 /* Fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Fire.wav; sourceTree = "<group>"; };
+		9333AB491A57B1D7004A7CE1 /* JumpSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = JumpSound.wav; sourceTree = "<group>"; };
 		9333E47A1A54E2960021B94F /* Jump.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jump.swift; sourceTree = "<group>"; };
-		936408A21A571C3A00E0566A /* images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = images.atlas; sourceTree = "<group>"; };
-		936408A41A571F5A00E0566A /* Atlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atlas.swift; sourceTree = "<group>"; };
+		936408A41A571F5A00E0566A /* structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
+		936D98EE1A58F6B600771B2E /* images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = images.atlas; sourceTree = "<group>"; };
 		93858E071A5602FD00181915 /* Bird.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bird.swift; sourceTree = "<group>"; };
 		9394D2A51A53798700798045 /* Cactus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cactus.swift; sourceTree = "<group>"; };
 		9394D2A71A5387CD00798045 /* Sky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sky.swift; sourceTree = "<group>"; };
@@ -82,11 +86,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9333AB321A579ACD004A7CE1 /* Sounds */ = {
+		9333AB451A57B1D7004A7CE1 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				9333AB331A579ACD004A7CE1 /* Fire.wav */,
-				9333AB341A579ACD004A7CE1 /* JumpSound.wav */,
+				9333AB461A57B1D7004A7CE1 /* BirdDeath.wav */,
+				9333AB471A57B1D7004A7CE1 /* Death.wav */,
+				9333AB481A57B1D7004A7CE1 /* Fire.wav */,
+				9333AB491A57B1D7004A7CE1 /* JumpSound.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -112,7 +118,7 @@
 		B1C241E01A4B4E8100D1F670 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
-				936408A41A571F5A00E0566A /* Atlas.swift */,
+				936408A41A571F5A00E0566A /* structs.swift */,
 				B1C241E31A4B4E8100D1F670 /* AppDelegate.swift */,
 				93BDBC111A57482E003AC427 /* Bullet.swift */,
 				B16AF7ED1A4D0973000F6B6A /* GameViewController.swift */,
@@ -126,9 +132,9 @@
 				9333E47A1A54E2960021B94F /* Jump.swift */,
 				B1C241F01A4B4E8100D1F670 /* LaunchScreen.xib */,
 				B1C241EB1A4B4E8100D1F670 /* Main.storyboard */,
-				9333AB321A579ACD004A7CE1 /* Sounds */,
-				936408A21A571C3A00E0566A /* images.atlas */,
+				9333AB451A57B1D7004A7CE1 /* Sounds */,
 				B16AF7EF1A4D097C000F6B6A /* Images.xcassets */,
+				936D98EE1A58F6B600771B2E /* images.atlas */,
 				B1C241E11A4B4E8100D1F670 /* Supporting Files */,
 			);
 			path = Basic;
@@ -240,11 +246,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B16AF7F01A4D097C000F6B6A /* Images.xcassets in Resources */,
-				9333AB351A579ACD004A7CE1 /* Fire.wav in Resources */,
-				9333AB361A579ACD004A7CE1 /* JumpSound.wav in Resources */,
-				936408A31A571C3A00E0566A /* images.atlas in Resources */,
 				B1C241F21A4B4E8100D1F670 /* LaunchScreen.xib in Resources */,
+				9333AB4A1A57B1D7004A7CE1 /* BirdDeath.wav in Resources */,
 				B1C241ED1A4B4E8100D1F670 /* Main.storyboard in Resources */,
+				9333AB4B1A57B1D7004A7CE1 /* Death.wav in Resources */,
+				936D98EF1A58F6B600771B2E /* images.atlas in Resources */,
+				9333AB4D1A57B1D7004A7CE1 /* JumpSound.wav in Resources */,
+				9333AB4C1A57B1D7004A7CE1 /* Fire.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +277,7 @@
 				9394D2AA1A538D1600798045 /* Ground.swift in Sources */,
 				B16AF7EE1A4D0973000F6B6A /* GameViewController.swift in Sources */,
 				93858E081A5602FD00181915 /* Bird.swift in Sources */,
-				936408A51A571F5A00E0566A /* Atlas.swift in Sources */,
+				936408A51A571F5A00E0566A /* structs.swift in Sources */,
 				93E14FA41A5275D400C16E42 /* Cowboy.swift in Sources */,
 				B1C241E41A4B4E8100D1F670 /* AppDelegate.swift in Sources */,
 				9394D2A81A5387CD00798045 /* Sky.swift in Sources */,
@@ -399,6 +407,7 @@
 				INFOPLIST_FILE = Basic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -409,6 +418,7 @@
 				INFOPLIST_FILE = Basic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

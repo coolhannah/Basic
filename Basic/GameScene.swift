@@ -22,7 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     //booleans that handle jump and game over
-    var canJump : Bool = false
+    var canJump : Bool = true
     var readyToBegin : Bool = false
     var gameIsOver : Bool = false
     var addJump : Bool = false
@@ -41,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var cowboySprite = Cowboy()
     let cactusNode = SKNode()
     let birdNode = SKNode()
+    var bulletNode = SKNode()
     
     //background
     var sky = Sky()
@@ -52,12 +53,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //sound
     var jumpPlayer = AVAudioPlayer()
     var shotPlayer = AVAudioPlayer()
+    var deathPlayer = AVAudioPlayer()
+    var birdDeathPlayer = AVAudioPlayer()
     
     override func didMoveToView(view: SKView) {
         
+        classVar.groundY = CGFloat( view.bounds.height * 7/20)
+        
+        view.showsPhysics = true
+        view.showsFPS = true
+        
         //configure sound
-        let pathToSound = NSBundle.mainBundle().pathForResource("JumpSound", ofType: "wav")!
-        let jumpURL = NSURL(fileURLWithPath: pathToSound)
+        let pathToSound = NSBundle.mainBundle().pathForResource("JumpSound", ofType: "wav")
+        let jumpURL = NSURL(fileURLWithPath: pathToSound!)
 
         jumpPlayer = AVAudioPlayer(contentsOfURL: jumpURL, error: nil)
         jumpPlayer.prepareToPlay()
@@ -68,8 +76,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shotPlayer = AVAudioPlayer(contentsOfURL: shotURL, error: nil)
         shotPlayer.prepareToPlay()
         
+        let pathToDeath = NSBundle.mainBundle().pathForResource("Death", ofType: "wav")
+        let deathURL = NSURL(fileURLWithPath: pathToDeath!)
+        
+        deathPlayer = AVAudioPlayer(contentsOfURL: deathURL, error: nil)
+        deathPlayer.prepareToPlay()
+        
+        let pathToBirdDeath = NSBundle.mainBundle().pathForResource("BirdDeath", ofType: "wav")
+        let birdDeathURL = NSURL(fileURLWithPath: pathToBirdDeath!)
+        
+        birdDeathPlayer = AVAudioPlayer(contentsOfURL: birdDeathURL, error: nil)
+        birdDeathPlayer.prepareToPlay()
+        
+        
         //reset booleans
-        canJump = false
+        canJump = true
         readyToBegin = false
         gameIsOver = false
         
@@ -131,6 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(cactusNode)
         self.addChild(birdNode)
         self.addChild(begin)
+        self.addChild(bulletNode)
         viewLoaded = true
     }
     
@@ -146,6 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //player death
         if(collision == (types.Hero.rawValue | types.Bird.rawValue) ||
             collision == (types.Hero.rawValue | types.Enemy.rawValue) && collision != lastCollision) {
+            deathPlayer.play()
             gameIsOver = true
             canJump = false
         
@@ -170,7 +193,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         //bullet kill
         else if(collision == (types.Bird.rawValue | types.Bullet.rawValue) && collision != lastCollision) {
-            jump.jumps += 2
+            birdDeathPlayer.play()
+            jump.jumps += 5
             var node = contact.bodyA.node
             var node2 = contact.bodyB.node
             while(node?.parent? != nil) {
@@ -182,11 +206,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             addJump = true
         }
-        //collision with ground
-        else if(collision == (types.Hero.rawValue | types.Ground.rawValue))
-        {
-            canJump = true
-        }
         
         lastCollision = collision
         
@@ -194,25 +213,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //touched screen
     var shoot = false
-    
+    var setCowPos = false
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
         var touchLocation = touches.anyObject()?.locationInView(self.view!)
         
         //reading in a jump
         if(canJump && readyToBegin && !gameIsOver && touchLocation?.x < self.view!.bounds.width/2) {
+            
+            if(cowboySprite.position.y <= classVar.groundY + (cowboySprite.size.height/2)) {
             jumpPlayer.play()
             cowboySprite.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
-            canJump = false;
-            addJump = true
-            jump.jumps++
+            }
         }
         if(shoot && !gameIsOver && readyToBegin && touchLocation?.x > self.view!.bounds.width/2) {
             shoot = false
             let bullet = Bullet(boy: cowboySprite)
             bullet.shoot()
             shotPlayer.play()
-            self.addChild(bullet)
+            bulletNode.addChild(bullet)
         }
         
         //ready to begin!   
@@ -233,21 +252,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lastShot : Double = 0.0
     
     var setOriginalTime = false
-    var originalTime = 0.0
     
     override func update(currentTime: CFTimeInterval) {
         
         if(!setOriginalTime) {
-            originalTime = currentTime
             lastBird = currentTime
             lastCactus = currentTime
             lastShot = currentTime
             setOriginalTime = true
         }
+        
         let birdPassed = currentTime - lastBird
         let cacPassed = currentTime - lastCactus
         
-        var randomNum = Int(arc4random_uniform(40))
+        var randomNum = Int(arc4random_uniform(50))
         
         //spawning a new cactus
         if(!gameIsOver && readyToBegin && cacPassed > 0.65) {
@@ -271,21 +289,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //stop cacti if game is over
         if(gameIsOver) {
-            var cacti = cactusNode.children
+            let cacti = cactusNode.children
             for anyCactus in cacti {
                 anyCactus.removeAllActions()
             }
-            var birds = birdNode.children
+            let birds = birdNode.children
             for anyBird in birds {
                 anyBird.removeAllActions()
             }
+            let bullets = bulletNode.children
+            for bullet in bullets {
+                if(bullet.position.x > view!.bounds.width) {
+                    bullet.removeFromParent()
+                }
+            }
         }
+        
+        //manging shots
         if(!gameIsOver && readyToBegin &&  currentTime - lastShot > 0.8) {
             lastShot = currentTime
             shoot = true
         }
         
         //change jump counter
+        if(!gameIsOver && cactusNode.children.count > 0) {
+            let cact = cactusNode.children[0] as Cactus
+            if(cact.position.x < 0) {
+                jump.jumps++
+                addJump = true
+                cact.removeFromParent()
+            }
+        }
+        
         if(addJump) {
             jumpCounter.text = "\(jump.jumps)"
             addJump = false

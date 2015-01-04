@@ -17,21 +17,20 @@ class Bullet : SKSpriteNode {
      init(boy: Cowboy) {
         super.init(texture: text, color: nil, size: text.size())
         //add these to current position to get gun location
-        let shootPoint = CGPoint(x: boy.position.x, y: boy.position.y)
+        let shootPoint = CGPoint(x: boy.position.x * 12/11, y: boy.position.y)
         self.size = CGSize(width: boy.size.width/12, height: boy.size.width/12)
         self.position = shootPoint
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: boy.size.width, height: boy.size.width))
-        self.physicsBody?.usesPreciseCollisionDetection
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width * 3, height: self.size.height * 3))
+        self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.dynamic = true
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.categoryBitMask = GameScene.types.Bullet.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Bird.rawValue
         self.physicsBody?.collisionBitMask = GameScene.types.Bullet.rawValue
-        action = SKAction.moveByX(boy.size.width * 13, y: 0.0, duration: 1.5)
+        action = SKAction.moveByX(boy.size.width * 11, y: 0.0, duration: 1.5)
     }
     
     func shoot() {
-        
         self.runAction(action)
     }
 

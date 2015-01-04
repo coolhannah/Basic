@@ -9,6 +9,11 @@
 import Foundation
 import SpriteKit
 
+struct classVar {
+    static var groundY = CGFloat()
+}
+
+
 struct textures {
     static let atlas = SKTextureAtlas(named: "images.atlas")
 }
