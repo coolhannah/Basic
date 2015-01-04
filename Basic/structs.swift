@@ -17,3 +17,7 @@ struct classVar {
 struct textures {
     static let atlas = SKTextureAtlas(named: "images.atlas")
 }
+
+struct jump {
+    static var jumps = 0
+}

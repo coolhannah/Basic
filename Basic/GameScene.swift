@@ -12,6 +12,7 @@ import AVFoundation
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let soundNode = SKNode()
+    
     //collision enumeration
     enum types : UInt32 {
         case Ground = 1
@@ -27,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameIsOver : Bool = false
     var addJump : Bool = false
     var viewLoaded : Bool = false
+    var birdSent: Bool = false
     
     //labels
     let begin = SKNode()
@@ -55,6 +57,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var shotPlayer = AVAudioPlayer()
     var deathPlayer = AVAudioPlayer()
     var birdDeathPlayer = AVAudioPlayer()
+    
+    let path = NSBundle.mainBundle().pathForResource("BirdExplode", ofType: "sks")
+
     
     override func didMoveToView(view: SKView) {
         
@@ -192,18 +197,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         //bullet kill
-        else if(collision == (types.Bird.rawValue | types.Bullet.rawValue) && collision != lastCollision) {
+        else if(birdSent && collision == (types.Bird.rawValue | types.Bullet.rawValue) && collision != lastCollision) {
             birdDeathPlayer.play()
+            let explosion = NSKeyedUnarchiver.unarchiveObjectWithFile(path!) as SKEmitterNode
+            explosion.numParticlesToEmit = 40
+            explosion.position = contact.contactPoint
+            self.addChild(explosion)
             jump.jumps += 5
-            var node = contact.bodyA.node
-            var node2 = contact.bodyB.node
-            while(node?.parent? != nil) {
-                node?.removeFromParent()
-            }
-            while(node2?.parent? != nil) {
-                node2?.removeFromParent()
-            }
+            birdNode.removeAllChildren()
+            bulletNode.removeAllChildren()
             
+            var children = bulletNode.children
+            for bullets in children {
+                bullets.removeFromParent()
+            }
+            var birdChildren = birdNode.children
+            for birds in birdChildren {
+                birds.removeFromParent()
+            }
+           
+            birdSent = false
             addJump = true
         }
         
@@ -228,10 +241,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if(shoot && !gameIsOver && readyToBegin && touchLocation?.x > self.view!.bounds.width/2) {
             shoot = false
-            let bullet = Bullet(boy: cowboySprite)
-            bullet.shoot()
-            shotPlayer.play()
-            bulletNode.addChild(bullet)
+            if(bulletNode.children.count > 0) {
+                let firstBullet = bulletNode.children[0] as Bullet
+                
+                if(firstBullet.position.x > self.view!.bounds.width/2) {
+                    let bullet = Bullet(boy: cowboySprite)
+                    bullet.shoot()
+                    shotPlayer.play()
+                    bulletNode.addChild(bullet)
+                }
+            } else {
+                let bullet = Bullet(boy: cowboySprite)
+                bullet.shoot()
+                shotPlayer.play()
+                bulletNode.addChild(bullet)
+            }
+
         }
         
         //ready to begin!   
@@ -284,6 +309,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 newBird.sendBird()
                 birdNode.addChild(newBird)
                 lastBird = currentTime
+                birdSent = true
             }
         }
         

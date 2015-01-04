@@ -29,7 +29,7 @@ class Cactus : SKSpriteNode {
         
         viewWidth = view.bounds.width
         self.size = CGSize( width: view.bounds.height/8, height: view.bounds.height/8 )
-        offscrnPt = CGPoint(x: viewWidth * 9/8, y: view.bounds.height / 3 + (self.size.height)/2)
+        offscrnPt = CGPoint(x: viewWidth, y: view.bounds.height / 3 + (self.size.height)/2)
         self.position = offscrnPt
         self.physicsBody = SKPhysicsBody(texture: cacTxture, size: self.size)
         self.physicsBody?.dynamic = false
@@ -40,7 +40,7 @@ class Cactus : SKSpriteNode {
     
     func sendCactus() {
         self.position = offscrnPt
-        self.runAction(SKAction.moveByX(-viewWidth * 5/4, y: 0, duration: NSTimeInterval(1.5)))
+        self.runAction(SKAction.moveByX(-viewWidth - self.size.width/2, y: 0, duration: NSTimeInterval(1.5)))
     }
     
     

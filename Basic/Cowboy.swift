@@ -30,7 +30,7 @@ class Cowboy : SKSpriteNode {
         
         //variables
         
-        cowPos = CGPoint(x: view.bounds.width/8, y: classVar.groundY + view.bounds.width/24)
+        cowPos = CGPoint(x: view.bounds.width/8, y: classVar.groundY * 3/2)
         let texture = SKTexture(imageNamed:"sprite_1")
         
         
@@ -39,8 +39,7 @@ class Cowboy : SKSpriteNode {
         
         self.size = CGSize(width: view.bounds.width/12, height: view.bounds.width/12)
         self.position = cowPos
-        let size = CGSize(width: self.size.width * 2/3, height: self.size.height)
-        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width * 4/9)
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width * 3/7)
         self.physicsBody?.mass = CGFloat(0.2)
         
         self.physicsBody?.categoryBitMask = GameScene.types.Hero.rawValue
