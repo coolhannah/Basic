@@ -35,12 +35,11 @@ class Cactus : SKSpriteNode {
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GameScene.types.Enemy.rawValue
         self.physicsBody?.contactTestBitMask = GameScene.types.Hero.rawValue
-        self.physicsBody?.collisionBitMask = GameScene.types.Hero.rawValue
     }
     
     func sendCactus() {
         self.position = offscrnPt
-        self.runAction(SKAction.moveByX(-viewWidth - self.size.width/2, y: 0, duration: NSTimeInterval(1.5)))
+        self.runAction(SKAction.moveByX(-viewWidth - self.size.width/2, y: 0, duration: NSTimeInterval(1.2)))
     }
     
     

@@ -37,7 +37,7 @@ class Ground : SKNode {
         ground2.position = CGPoint(x: positions.x * 3, y: positions.y)
         ground2.size = view.bounds.size
         
-        let moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1.5))
+        let moveground = SKAction.moveByX(-view.bounds.width, y:0, duration: NSTimeInterval(1.2))
         let resetground = SKAction.moveByX(view.bounds.width, y:0, duration: 0.0)
         moveIt = SKAction.repeatActionForever(SKAction.sequence([moveground, resetground]))
     

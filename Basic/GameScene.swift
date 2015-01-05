@@ -65,8 +65,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         classVar.groundY = CGFloat( view.bounds.height * 7/20)
         
-        view.showsPhysics = true
-        view.showsFPS = true
+      //  view.showsPhysics = true
+       // view.showsFPS = true
         
         //configure sound
         let pathToSound = NSBundle.mainBundle().pathForResource("JumpSound", ofType: "wav")
@@ -110,11 +110,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cowboySprite = Cowboy(view: view)
         
         //configure labels
-        let labelTexture = textures.atlas.textureNamed("TordyHopper")
-        labelTexture.filteringMode = .Nearest
-        label = SKSpriteNode(texture: labelTexture, size: CGSize(width: self.size.width/2, height: self.size.height/2))
-        label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
         
+        /* removed */
+//        let labelTexture = textures.atlas.textureNamed("TordyHopper")
+//        labelTexture.filteringMode = .Nearest
+//        label = SKSpriteNode(texture: labelTexture, size: CGSize(width: self.size.width/2, height: self.size.height/2))
+//        label.position = CGPoint(x: view.bounds.width/2, y: view.bounds.height/2)
+//        
         let shootText = textures.atlas.textureNamed("shoot"); shootText.filteringMode = .Nearest
         let jumpText = textures.atlas.textureNamed("up"); jumpText.filteringMode = .Nearest
         
@@ -153,7 +155,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(sky)
         self.addChild(ground)
         self.addChild(cowboySprite)
-        self.addChild(label)
         self.addChild(cactusNode)
         self.addChild(birdNode)
         self.addChild(begin)
@@ -200,7 +201,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if(birdSent && collision == (types.Bird.rawValue | types.Bullet.rawValue) && collision != lastCollision) {
             birdDeathPlayer.play()
             let explosion = NSKeyedUnarchiver.unarchiveObjectWithFile(path!) as SKEmitterNode
-            explosion.numParticlesToEmit = 40
+            explosion.numParticlesToEmit = 100
             explosion.position = contact.contactPoint
             self.addChild(explosion)
             jump.jumps += 5

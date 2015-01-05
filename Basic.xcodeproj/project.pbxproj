@@ -14,6 +14,7 @@
 		9333AB4D1A57B1D7004A7CE1 /* JumpSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9333AB491A57B1D7004A7CE1 /* JumpSound.wav */; };
 		936408A51A571F5A00E0566A /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936408A41A571F5A00E0566A /* structs.swift */; };
 		936D98EF1A58F6B600771B2E /* images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 936D98EE1A58F6B600771B2E /* images.atlas */; };
+		9384287A1A59F2AF007E7BEF /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 938428791A59F2AF007E7BEF /* white.png */; };
 		93858E081A5602FD00181915 /* Bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93858E071A5602FD00181915 /* Bird.swift */; };
 		9394D2A61A53798700798045 /* Cactus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A51A53798700798045 /* Cactus.swift */; };
 		9394D2A81A5387CD00798045 /* Sky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394D2A71A5387CD00798045 /* Sky.swift */; };
@@ -49,6 +50,7 @@
 		9333AB491A57B1D7004A7CE1 /* JumpSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = JumpSound.wav; sourceTree = "<group>"; };
 		936408A41A571F5A00E0566A /* structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
 		936D98EE1A58F6B600771B2E /* images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = images.atlas; sourceTree = "<group>"; };
+		938428791A59F2AF007E7BEF /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		93858E071A5602FD00181915 /* Bird.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bird.swift; sourceTree = "<group>"; };
 		9394D2A51A53798700798045 /* Cactus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cactus.swift; sourceTree = "<group>"; };
 		9394D2A71A5387CD00798045 /* Sky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sky.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				936D98EE1A58F6B600771B2E /* images.atlas */,
 				B1C241E11A4B4E8100D1F670 /* Supporting Files */,
 				93E25DEB1A59212600697725 /* BirdExplode.sks */,
+				938428791A59F2AF007E7BEF /* white.png */,
 				93E25DEC1A59212600697725 /* spark.png */,
 			);
 			path = Basic;
@@ -255,6 +258,7 @@
 				9333AB4B1A57B1D7004A7CE1 /* Death.wav in Resources */,
 				93E25DEE1A59212600697725 /* spark.png in Resources */,
 				936D98EF1A58F6B600771B2E /* images.atlas in Resources */,
+				9384287A1A59F2AF007E7BEF /* white.png in Resources */,
 				9333AB4D1A57B1D7004A7CE1 /* JumpSound.wav in Resources */,
 				9333AB4C1A57B1D7004A7CE1 /* Fire.wav in Resources */,
 				93E25DED1A59212600697725 /* BirdExplode.sks in Resources */,
